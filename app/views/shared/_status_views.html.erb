@@ -1,0 +1,33 @@
+<div class="media">
+  <div class="media-body">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+      <th>Status</th>
+      <th>Service Time</th>
+      <th>Notes</th>
+      <th>Location</th>
+      <th>Trip ID</th>
+      <th></th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @status_times.each do |status_time| %>
+      <tr>
+        <td><%= status_time.status %></td>
+        <td><%= status_time.created_at.strftime("%b %d, %Y || %I:%M:%S:%p") %></td>
+        <td><%= status_time.notes %></td>
+        <td><%= status_time.location %></td>
+        <td><%= status_time.trip_id %></td>
+        
+        
+    </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<br>
+

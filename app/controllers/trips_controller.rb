@@ -1,44 +1,56 @@
 class TripsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_trip, only: [:show, :edit, :update, :destroy]
 
-  # GET /trips
-  # GET /trips.json
+#-------------------------------------------------------------------------------
+
   def index
-    @trips = Trip.all
+   @trips = current_user.trips
+   #@trips = Trip.all
   end
 
-  # GET /trips/1
-  # GET /trips/1.json
+#-------------------------------------------------------------------------------
+
   def show
+    @status_times = @trip.status_times.all
+    #@status_times = @trip.current_user.status_times
   end
 
-  # GET /trips/new
+#-------------------------------------------------------------------------------
+
   def new
     @trip = Trip.new
+    @trip.status_times.new
   end
 
-  # GET /trips/1/edit
-  def edit
+#-------------------------------------------------------------------------------
+
+  def edit # name change in routes to "detials'
+    @status_times = @trip.status_times.all
+    @trip = current_user.trips
   end
 
-  # POST /trips
-  # POST /trips.json
-  def create
-    @trip = Trip.new(trip_params)
+#-------------------------------------------------------------------------------
 
-    respond_to do |format|
-      if @trip.save
-        format.html { redirect_to @trip, notice: 'Trip was successfully created.' }
-        format.json { render :show, status: :created, location: @trip }
-      else
-        format.html { render :new }
-        format.json { render json: @trip.errors, status: :unprocessable_entity }
-      end
+ def create
+    
+    @trip = current_user.trips.new(trip_params)
+    #@trip = Trip.find(params[:trip_id])
+    #@status_time = @trip.status_times.create(status_time_params)
+   # @status_time.user_id = current_user.id if current_user
+
+ 
+    if @trip.save
+       redirect_to @trip, notice: 'Trip was successfully created.' 
+    
+    else
+      render :new 
+    
     end
   end
 
-  # PATCH/PUT /trips/1
-  # PATCH/PUT /trips/1.json
+#-------------------------------------------------------------------------------
+
   def update
     respond_to do |format|
       if @trip.update(trip_params)
@@ -51,8 +63,8 @@ class TripsController < ApplicationController
     end
   end
 
-  # DELETE /trips/1
-  # DELETE /trips/1.json
+#-------------------------------------------------------------------------------
+
   def destroy
     @trip.destroy
     respond_to do |format|
@@ -60,15 +72,31 @@ class TripsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+#-------------------------------------------------------------------------------
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_trip
       @trip = Trip.find(params[:id])
     end
+    
+#-------------------------------------------------------------------------------
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def trip_params
-      params.require(:trip).permit(:user_id)
+      params.require(:trip).permit(
+        :user_id, :created_at,
+          status_times_attributes: [
+            :user_id, 
+            :_destroy,
+            :status,
+            :notes,
+            :location,
+            :created_at,
+            :updated_at,
+            :trip_id,
+            :id
+            ]
+          )
     end
 end
