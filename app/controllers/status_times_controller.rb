@@ -11,11 +11,11 @@ class StatusTimesController < ApplicationController
 
 
       if @status_time.save
-       redirect_to trip_path( @trip), notice: 'Your driving status has been updated.' 
-        
+       redirect_to trip_path( @trip)
+        flash[:success] = 'Your driving status has been updated.'
       else
-         redirect_to trip_path( @trip), notice: "what the hell are you trying to do" 
-       
+       redirect_to trip_path( @trip), notice: 
+        flash[:danger] = "what the hell are you trying to do!" 
       end
     end
 
