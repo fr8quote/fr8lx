@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Status Times</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>Location</th>
+      <th>Notes</th>
+      <th>User</th>
+      <th>Trip</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @status_times.each do |status_time| %>
+      <tr>
+        <td><%= status_time.status %></td>
+        <td><%= status_time.location %></td>
+        <td><%= status_time.notes %></td>
+        <td><%= status_time.user %></td>
+        <td><%= status_time.trip %></td>
+        <td><%= link_to 'Show', status_time %></td>
+        <td><%= link_to 'Edit', edit_status_time_path(status_time) %></td>
+        <td><%= link_to 'Destroy', status_time, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Status time', new_status_time_path %>
