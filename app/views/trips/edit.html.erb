@@ -1,6 +1,5 @@
-<% @trip.each do |trip| %>
-<h4>Trip For <%= trip.created_at.strftime("%b %d, %Y") %></h4> 
-<% end %>
+<h4>Record created on: <%= @tripdate.created_at.strftime("%b %d, %Y || %I:%M:%S:%p") %> 
+ </h4>
 
 <%= render partial: 'shared/status_views' %>
 

@@ -26,8 +26,10 @@ class TripsController < ApplicationController
 #-------------------------------------------------------------------------------
 
   def edit # name change in routes to "detials'
-    @status_times = @trip.status_times.all
-    @trip = current_user.trips
+    @status_times = @trip.status_times(params[:id])
+    @trip = current_user.trips(params[:id])
+    @tripdate = current_user.trips.find(params[:id])
+   
   end
 
 #-------------------------------------------------------------------------------
